@@ -6,5 +6,6 @@
   "password": "123123",
   "database": "prokat",
   "entities": ["src/**/**.entity{.ts,.js}"],
+  "subscribers": ["src/**/**.subscriber{.ts,.js}"],
   "synchronize": true
 }

@@ -1,10 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn } from 'typeorm';
-import { MaxLength, IsEmail, IsDate, IsMobilePhone, IsNotEmpty } from 'class-validator';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Unique,
+  CreateDateColumn,
+  UpdateDateColumn,
+  VersionColumn
+} from 'typeorm';
+import {
+  MaxLength,
+  IsEmail,
+  IsDate,
+  IsMobilePhone,
+  IsNotEmpty,
+  MinLength
+} from 'class-validator';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn() id: number;
 
   @Column()
   @IsNotEmpty()
@@ -14,20 +28,28 @@ export class User {
   @IsNotEmpty()
   lastName: string;
 
-  @Column({default: ''})
+  @Column({ default: '' })
   photoUrl: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   @IsEmail()
   email: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   @IsMobilePhone('uk-UA')
   phone: string;
 
-  @Column({default: false})
+  @Column({ default: false })
   emailVerified: boolean;
 
-  @CreateDateColumn()
-  dateCreate: Date;
+  @CreateDateColumn() dateCreate: Date;
+
+  @UpdateDateColumn() updateDate: Date;
+
+  @VersionColumn() version: number;
+
+  @Column()
+  @IsNotEmpty()
+  @MinLength(6)
+  password: string;
 }
